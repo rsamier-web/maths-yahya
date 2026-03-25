@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercices — Les pourcentages — 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1c1c;
+    --paper: #ffffff;
+    --rule: #333;
+    --light-rule: #ccc;
+    --accent: #c0392b;
+    --teal: #1a6b5e;
+    --blue: #1a4a8a;
+    --light-blue: #eaf1fb;
+    --light-teal: #eaf5f3;
+    --light-red: #fdf0ef;
+    --light-yellow: #fffbe6;
+    --num-color: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #e8e6e0;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 2rem 1rem;
+  }
+
+  .page {
+    background: white;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+  }
+
+  /* ── HEADER ── */
+  .sheet-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sheet-header .left h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .sheet-header .left p {
+    font-size: 0.82rem;
+    color: #555;
+    margin-top: 0.15rem;
+  }
+  .sheet-header .right {
+    font-size: 0.8rem;
+    color: #555;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .id-line {
+    display: flex;
+    gap: 2rem;
+    margin: 0.8rem 0 1.8rem 0;
+    font-size: 0.88rem;
+    color: #444;
+  }
+  .id-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .id-field span { font-weight: 700; }
+  .id-field .line {
+    display: inline-block;
+    width: 120px;
+    border-bottom: 1px solid #888;
+    height: 1em;
+  }
+
+  /* ── EXERCISE ── */
+  .exercise {
+    margin-bottom: 1.8rem;
+  }
+
+  .exercise-title {
+    font-weight: 700;
+    font-size: 0.97rem;
+    color: var(--ink);
+    text-decoration: underline;
+    margin-bottom: 0.4rem;
+  }
+
+  /* cadre autour de l'énoncé — style feuille */
+  .framed {
+    border-left: 3px solid var(--blue);
+    background: var(--light-blue);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .framed p { margin-bottom: 0.3rem; }
+  .framed p:last-child { margin-bottom: 0; }
+
+  .questions {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  .questions li {
+    margin-bottom: 0.3rem;
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .q-num {
+    font-weight: 700;
+    color: var(--num-color);
+    min-width: 1.4em;
+  }
+
+  /* ── ANSWER LINES ── */
+  .answer-zone {
+    margin-top: 0.7rem;
+  }
+  .answer-line {
+    border-bottom: 1px solid #bbb;
+    height: 1.7em;
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── SEPARATOR ── */
+  hr {
+    border: none;
+    border-top: 1px dashed #bbb;
+    margin: 1.5rem 0;
+  }
+
+  /* ── CORRECTION (hidden by default) ── */
+  .correction-section {
+    display: none;
+    margin-top: 2.5rem;
+    border-top: 3px double var(--teal);
+    padding-top: 1.5rem;
+  }
+  .correction-section.visible { display: block; }
+
+  .correction-title {
+    font-family: 'Merriweather', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .corr-block {
+    background: var(--light-teal);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.92rem;
+  }
+  .corr-block .corr-header {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid #aad5ce;
+    padding-bottom: 0.3rem;
+  }
+  .corr-block .step { margin-bottom: 0.5rem; }
+  .corr-block .step .label {
+    font-weight: 700;
+    color: #555;
+    font-size: 0.85rem;
+  }
+  .calc {
+    font-family: monospace;
+    font-size: 0.93rem;
+    background: white;
+    border: 1px solid #aad5ce;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 0.2rem 0;
+    color: var(--ink);
+  }
+  .answer-box {
+    background: white;
+    border: 2px solid var(--teal);
+    border-radius: 4px;
+    padding: 0.45rem 0.9rem;
+    margin-top: 0.6rem;
+    font-weight: 700;
+    color: var(--teal);
+    font-size: 0.92rem;
+  }
+  .answer-box::before { content: '✅  '; }
+
+  /* ── BUTTON ── */
+  .btn-zone {
+    text-align: center;
+    margin: 2rem 0 0.5rem;
+  }
+  button {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.6rem;
+    font-size: 0.9rem;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  button:hover { background: #145a4f; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; padding: 1.5cm 2cm; }
+    .btn-zone { display: none; }
+    .correction-section { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- EN-TÊTE -->
+  <div class="sheet-header">
+    <div class="left">
+      <h1>Les pourcentages</h1>
+      <p>Exercices d'application — Classe de 4ème</p>
+    </div>
+    <div class="right">
+      Mathématiques<br>
+      4ème — Collège
+    </div>
+  </div>
+
+  <div class="id-line">
+    <div class="id-field"><span>Nom :</span><span class="line"></span></div>
+    <div class="id-field"><span>Prénom :</span><span class="line"></span></div>
+    <div class="id-field"><span>Classe :</span><span class="line" style="width:60px"></span></div>
+  </div>
+
+  <!-- ════════════════════════ EXERCICE 1 ════════════════════════ -->
+  <div class="exercise">
+    <div class="exercise-title">Exercice 1 :</div>
+    <div class="framed">
+      <p>Sarah achète une paire de baskets affichée à 95 € et les paie finalement 76 €.</p>
+      <ul class="questions">
+        <li><span class="q-num">1.</span> Quel est le montant de la réduction dont elle bénéficie ?</li>
+        <li><span class="q-num">2.</span> À quel pourcentage de réduction cela correspond-il ?</li>
+      </ul>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════ EXERCICE 2 ════════════════════════ -->
+  <div class="exercise">
+    <div class="exercise-title">Exercice 2 : Résoudre les problèmes suivants</div>
+
+    <div class="framed" style="margin-bottom:1rem;">
+      <p>Un agriculteur récolte 840 kg de tomates. Il en vend 588 kg sur le marché.</p>
+      <p>Quel est le pourcentage de tomates vendues sur le marché ?</p>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+
+    <div class="framed" style="margin-top:1.1rem; margin-bottom:1rem;">
+      <p>Dans une école de 800 élèves, 320 pratiquent un sport en club, 240 font de la musique et les autres ne font aucune activité extrascolaire.</p>
+      <p>Quels sont les pourcentages pour chaque groupe ?</p>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════ EXERCICE 3 ════════════════════════ -->
+  <div class="exercise">
+    <div class="exercise-title">Exercice 3 :</div>
+    <div class="framed">
+      <p>Le prix d'un canapé est de 740 €. Lors des soldes d'été, son prix est réduit de 35 %.</p>
+      <p>Quel est alors le nouveau prix de ce canapé ?</p>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════ EXERCICE 4 ════════════════════════ -->
+  <div class="exercise">
+    <div class="exercise-title">Exercice 4 :</div>
+    <div class="framed">
+      <p>Une ville comptait 24 500 habitants en 2010. En 2024, sa population a augmenté de 8 %.</p>
+      <p>Quelle est la population de cette ville en 2024 ?</p>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════ EXERCICE 5 ════════════════════════ -->
+  <div class="exercise">
+    <div class="exercise-title">Exercice 5 :</div>
+    <div class="framed">
+      <p>Un magasin de sport propose deux offres sur un vélo à 480 € :</p>
+      <ul class="questions">
+        <li><span class="q-num">•</span> Offre A : une réduction de 20 %</li>
+        <li><span class="q-num">•</span> Offre B : une réduction de 80 €</li>
+      </ul>
+      <p style="margin-top:0.5rem">Quelle offre est la plus avantageuse ? Justifier le calcul.</p>
+    </div>
+    <div class="answer-zone">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ BOUTON ════════════════════════ -->
+  <div class="btn-zone">
+    <button onclick="toggleCorrection()">Afficher / Masquer la correction</button>
+  </div>
+
+  <!-- ════════════════════════ CORRECTION ════════════════════════ -->
+  <div class="correction-section" id="correction">
+    <div class="correction-title">— Correction détaillée —</div>
+
+    <!-- CORR 1 -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 1</div>
+      <div class="step">
+        <div class="label">Données :</div> Prix initial = 95 €  |  Prix payé = 76 €
+      </div>
+      <div class="step">
+        <div class="label">Question 1 — Montant de la réduction :</div><br>
+        <span class="calc">Réduction = 95 − 76 = 19 €</span>
+      </div>
+      <div class="step">
+        <div class="label">Question 2 — Pourcentage de réduction :</div><br>
+        <span class="calc">Pourcentage = (19 ÷ 95) × 100 = 0,20 × 100 = 20 %</span>
+      </div>
+      <div class="answer-box">La réduction est de 19 €, soit 20 % du prix initial.</div>
+    </div>
+
+    <!-- CORR 2a -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 2 — Problème 1</div>
+      <div class="step">
+        <div class="label">Données :</div> Récolte totale = 840 kg  |  Vendues = 588 kg
+      </div>
+      <div class="step">
+        <span class="calc">Pourcentage = (588 ÷ 840) × 100 = 0,70 × 100 = 70 %</span>
+      </div>
+      <div class="answer-box">70 % des tomates ont été vendues sur le marché.</div>
+    </div>
+
+    <!-- CORR 2b -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 2 — Problème 2</div>
+      <div class="step">
+        <div class="label">Données :</div> Total = 800  |  Sport = 320  |  Musique = 240
+      </div>
+      <div class="step">
+        <div class="label">Élèves sans activité :</div><br>
+        <span class="calc">Sans activité = 800 − 320 − 240 = 240</span>
+      </div>
+      <div class="step">
+        <div class="label">Pourcentages :</div><br>
+        <span class="calc">Sport = (320 ÷ 800) × 100 = 40 %</span><br>
+        <span class="calc">Musique = (240 ÷ 800) × 100 = 30 %</span><br>
+        <span class="calc">Sans activité = (240 ÷ 800) × 100 = 30 %</span>
+      </div>
+      <div class="answer-box">Sport : 40 %  —  Musique : 30 %  —  Aucune activité : 30 %  (total = 100 % ✓)</div>
+    </div>
+
+    <!-- CORR 3 -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 3</div>
+      <div class="step">
+        <div class="label">Données :</div> Prix initial = 740 €  |  Réduction = 35 %
+      </div>
+      <div class="step">
+        <div class="label">Calcul de la réduction :</div><br>
+        <span class="calc">Réduction = 740 × 0,35 = 259 €</span>
+      </div>
+      <div class="step">
+        <div class="label">Nouveau prix :</div><br>
+        <span class="calc">Nouveau prix = 740 − 259 = 481 €</span>
+      </div>
+      <div style="font-size:0.83rem; color:#666; margin-top:0.3rem;">Vérification : 740 × 0,65 = 481 € ✓</div>
+      <div class="answer-box">Le nouveau prix du canapé est 481 €.</div>
+    </div>
+
+    <!-- CORR 4 -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 4</div>
+      <div class="step">
+        <div class="label">Données :</div> Population 2010 = 24 500  |  Augmentation = 8 %
+      </div>
+      <div class="step">
+        <div class="label">Calcul de l'augmentation :</div><br>
+        <span class="calc">Augmentation = 24 500 × 0,08 = 1 960</span>
+      </div>
+      <div class="step">
+        <div class="label">Population en 2024 :</div><br>
+        <span class="calc">Population = 24 500 + 1 960 = 26 460 habitants</span>
+      </div>
+      <div style="font-size:0.83rem; color:#666; margin-top:0.3rem;">Vérification : 24 500 × 1,08 = 26 460 ✓</div>
+      <div class="answer-box">La ville compte 26 460 habitants en 2024.</div>
+    </div>
+
+    <!-- CORR 5 -->
+    <div class="corr-block">
+      <div class="corr-header">Exercice 5</div>
+      <div class="step">
+        <div class="label">Données :</div> Prix initial = 480 €
+      </div>
+      <div class="step">
+        <div class="label">Offre A — réduction de 20 % :</div><br>
+        <span class="calc">Réduction A = 480 × 0,20 = 96 €</span><br>
+        <span class="calc">Prix A = 480 − 96 = 384 €</span>
+      </div>
+      <div class="step">
+        <div class="label">Offre B — réduction de 80 € :</div><br>
+        <span class="calc">Prix B = 480 − 80 = 400 €</span>
+      </div>
+      <div class="answer-box">L'offre A est plus avantageuse : 384 € contre 400 € pour l'offre B (soit 16 € de moins).</div>
+    </div>
+
+  </div><!-- /correction -->
+
+</div><!-- /page -->
+
+<script>
+  function toggleCorrection() {
+    const c = document.getElementById('correction');
+    c.classList.toggle('visible');
+    window.scrollTo({ top: c.offsetTop - 20, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
