@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Fractions – Règles de calcul</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --ink: #1a1612;
+    --muted: #7a6e64;
+    --accent1: #c8402a; /* rouge brique */
+    --accent2: #2a6cc8; /* bleu */
+    --accent3: #2a9c5c; /* vert */
+    --accent4: #c87a2a; /* orange */
+    --border: #e2ddd6;
+    --tag-bg: #f0ebe3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 0 1rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .eyebrow {
+    font-size: .75rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: .6rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--accent1);
+  }
+
+  header p {
+    margin-top: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  /* ── NAV PILLS ── */
+  .nav-pills {
+    max-width: 820px;
+    margin: 2rem auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .nav-pills a {
+    display: inline-block;
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all .2s;
+    background: var(--card);
+  }
+
+  .nav-pills a:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-head {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: .6rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+  }
+
+  .badge {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .2rem .65rem;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--muted);
+  }
+
+  /* ── RULE CARD ── */
+  .rule-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .rule-card-header {
+    padding: 1rem 1.4rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .rule-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .rule-card-header h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .rule-body { padding: 1.4rem; }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: var(--tag-bg);
+    border-left: 3px solid currentColor;
+    border-radius: 0 8px 8px 0;
+    padding: .9rem 1.2rem;
+    margin: .8rem 0 1.2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .95rem;
+  }
+
+  /* ── FRACTION RENDERING ── */
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    font-family: 'DM Mono', monospace;
+    font-size: .92em;
+    line-height: 1.1;
+    margin: 0 .15em;
+  }
+
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 .2em .05em; }
+  .frac .den { padding: .05em .2em 0; }
+
+  /* ── EXAMPLE BLOCK ── */
+  .example-label {
+    font-size: .73rem;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .5rem;
+  }
+
+  .example {
+    background: #f7f4ef;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: .85rem 1.1rem;
+    margin-bottom: .8rem;
+    font-size: .95rem;
+    line-height: 2;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: .3rem;
+  }
+
+  .arrow { color: var(--muted); font-size: .85rem; }
+
+  .highlight {
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── COLOR THEMES PER OPERATION ── */
+  .add    .rule-icon { background: #fde8e4; color: var(--accent1); }
+  .add    .formula   { color: var(--accent1); border-left-color: var(--accent1); }
+
+  .mul    .rule-icon { background: #e4edfd; color: var(--accent2); }
+  .mul    .formula   { color: var(--accent2); border-left-color: var(--accent2); }
+
+  .div    .rule-icon { background: #e4fded; color: var(--accent3); }
+  .div    .formula   { color: var(--accent3); border-left-color: var(--accent3); }
+
+  .ent    .rule-icon { background: #fdeee4; color: var(--accent4); }
+  .ent    .formula   { color: var(--accent4); border-left-color: var(--accent4); }
+
+  /* ── REMEMBER BOX ── */
+  .remember {
+    background: #fffbf0;
+    border: 1.5px solid #e8d98a;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0 .4rem;
+    font-size: .9rem;
+  }
+
+  .remember strong { display: block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #a08020; margin-bottom: .3rem; }
+
+  /* ── EXERCISES ── */
+  .exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ex-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    position: relative;
+  }
+
+  .ex-card:hover { border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+
+  .ex-num {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .4rem;
+  }
+
+  .ex-question {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    line-height: 2;
+  }
+
+  .ex-answer {
+    display: none;
+    margin-top: .8rem;
+    padding-top: .8rem;
+    border-top: 1.5px dashed var(--border);
+    font-size: .88rem;
+    line-height: 1.9;
+    color: var(--accent3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .ex-card.revealed .ex-answer { display: block; }
+
+  .btn-reveal {
+    margin-top: .7rem;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: .3rem .7rem;
+    cursor: pointer;
+    transition: all .15s;
+    color: var(--muted);
+  }
+
+  .btn-reveal:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* ── SHOW ALL ── */
+  .show-all-wrap {
+    margin: 1rem 0 2.5rem;
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-all {
+    font-size: .8rem;
+    font-weight: 500;
+    padding: .5rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+    transition: all .15s;
+  }
+
+  .btn-all:hover { background: transparent; color: var(--ink); }
+
+  .btn-reset {
+    font-size: .8rem;
+    font-weight: 500;
+    padding: .5rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    transition: all .15s;
+  }
+
+  .btn-reset:hover { border-color: var(--accent1); color: var(--accent1); }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 820px;
+    margin: 2rem auto 0;
+    padding-top: 1.2rem;
+    border-top: 1.5px solid var(--border);
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .exercise-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Mathématiques – Niveau collège</p>
+  <h1>Calculer avec<br>les <em>fractions</em></h1>
+  <p>Toutes les règles essentielles, illustrées pas à pas, avec des exercices corrigés.</p>
+</header>
+
+<nav class="nav-pills">
+  <a href="#add-sub">➕ Addition &amp; Soustraction</a>
+  <a href="#mul">✖ Multiplication</a>
+  <a href="#div">➗ Division</a>
+  <a href="#exercices">📝 Exercices</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════
+     1. ADDITION & SOUSTRACTION
+═══════════════════════════════════════════════ -->
+
+<div class="section-head" id="add-sub">
+  <h2>Addition &amp; Soustraction</h2>
+  <span class="badge">Règles 1 &amp; 2</span>
+</div>
+
+<!-- Règle 1a : même dénominateur -->
+<div class="rule-card add">
+  <div class="rule-card-header">
+    <div class="rule-icon">➕</div>
+    <h3>Règle 1 — Fractions avec le <strong>même dénominateur</strong></h3>
+  </div>
+  <div class="rule-body">
+    <p>Quand deux fractions ont le même dénominateur, on <strong>additionne (ou soustrait) seulement les numérateurs</strong> et on garde le dénominateur.</p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">c</span></span>
+      ±
+      <span class="frac"><span class="num">b</span><span class="den">c</span></span>
+      =
+      <span class="frac"><span class="num">a ± b</span><span class="den">c</span></span>
+    </div>
+
+    <p class="example-label">Exemples</p>
+
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">3</span><span class="den">7</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">2</span><span class="den">7</span></span>
+        <span class="arrow">→</span>
+        <span class="frac"><span class="num">3 + 2</span><span class="den">7</span></span>
+        <span class="arrow">=</span>
+        <span class="highlight"><span class="frac"><span class="num">5</span><span class="den">7</span></span></span>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">9</span><span class="den">11</span></span>
+        <span>−</span>
+        <span class="frac"><span class="num">4</span><span class="den">11</span></span>
+        <span class="arrow">→</span>
+        <span class="frac"><span class="num">9 − 4</span><span class="den">11</span></span>
+        <span class="arrow">=</span>
+        <span class="highlight"><span class="frac"><span class="num">5</span><span class="den">11</span></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Règle 1b : dénominateurs différents -->
+<div class="rule-card add">
+  <div class="rule-card-header">
+    <div class="rule-icon">➕</div>
+    <h3>Règle 2 — Fractions avec des <strong>dénominateurs différents</strong></h3>
+  </div>
+  <div class="rule-body">
+    <p>Il faut d'abord trouver un <strong>dénominateur commun</strong> (souvent le produit des deux dénominateurs, ou leur PPCM), puis réécrire chaque fraction avec ce nouveau dénominateur.</p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ±
+      <span class="frac"><span class="num">c</span><span class="den">d</span></span>
+      =
+      <span class="frac"><span class="num">a × d ± c × b</span><span class="den">b × d</span></span>
+    </div>
+
+    <p class="example-label">Exemple 1 – Addition</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">1</span><span class="den">4</span></span>
+      </div>
+      <div class="step">
+        <span class="arrow">Dénominateur commun : 3 × 4 = 12</span>
+      </div>
+      <div class="step">
+        <span>=</span>
+        <span class="frac"><span class="num">1 × 4</span><span class="den">12</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">1 × 3</span><span class="den">12</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">4</span><span class="den">12</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">3</span><span class="den">12</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">7</span><span class="den">12</span></span></span>
+      </div>
+    </div>
+
+    <p class="example-label">Exemple 2 – Soustraction</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+        <span>−</span>
+        <span class="frac"><span class="num">1</span><span class="den">4</span></span>
+      </div>
+      <div class="step">
+        <span class="arrow">Dénominateur commun : PPCM(6, 4) = 12</span>
+      </div>
+      <div class="step">
+        <span>=</span>
+        <span class="frac"><span class="num">5 × 2</span><span class="den">12</span></span>
+        <span>−</span>
+        <span class="frac"><span class="num">1 × 3</span><span class="den">12</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">10</span><span class="den">12</span></span>
+        <span>−</span>
+        <span class="frac"><span class="num">3</span><span class="den">12</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">7</span><span class="den">12</span></span></span>
+      </div>
+    </div>
+
+    <div class="remember">
+      <strong>💡 À retenir</strong>
+      On ne peut <em>jamais</em> additionner des fractions qui n'ont pas le même dénominateur directement.
+      <br>Ex : <span class="frac" style="font-family:DM Mono,monospace"><span class="num">1</span><span class="den">2</span></span> + <span class="frac" style="font-family:DM Mono,monospace"><span class="num">1</span><span class="den">3</span></span> ≠ <span class="frac" style="font-family:DM Mono,monospace"><span class="num">2</span><span class="den">5</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- Règle 1c : entier + fraction -->
+<div class="rule-card ent">
+  <div class="rule-card-header">
+    <div class="rule-icon">🔢</div>
+    <h3>Règle 3 — Fraction ± un <strong>nombre entier</strong></h3>
+  </div>
+  <div class="rule-body">
+    <p>On écrit l'entier sous forme de fraction (avec le même dénominateur), puis on applique la règle habituelle.</p>
+
+    <div class="formula">
+      n = <span class="frac"><span class="num">n × d</span><span class="den">d</span></span>
+      &nbsp;→&nbsp;
+      <span class="frac"><span class="num">a</span><span class="den">d</span></span> + n = <span class="frac"><span class="num">a + n × d</span><span class="den">d</span></span>
+    </div>
+
+    <p class="example-label">Exemple</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+        <span>+ 2</span>
+        <span>=</span>
+        <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">2 × 5</span><span class="den">5</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+        <span>+</span>
+        <span class="frac"><span class="num">10</span><span class="den">5</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">13</span><span class="den">5</span></span></span>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="step">
+        <span>3 −</span>
+        <span class="frac"><span class="num">2</span><span class="den">7</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">21</span><span class="den">7</span></span>
+        <span>−</span>
+        <span class="frac"><span class="num">2</span><span class="den">7</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">19</span><span class="den">7</span></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     2. MULTIPLICATION
+═══════════════════════════════════════════════ -->
+
+<div class="section-head" id="mul">
+  <h2>Multiplication</h2>
+  <span class="badge">Règles 4 &amp; 5</span>
+</div>
+
+<div class="rule-card mul">
+  <div class="rule-card-header">
+    <div class="rule-icon">✖</div>
+    <h3>Règle 4 — Multiplier deux fractions</h3>
+  </div>
+  <div class="rule-body">
+    <p>On multiplie les numérateurs entre eux et les dénominateurs entre eux. <strong>Pas besoin de dénominateur commun !</strong></p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ×
+      <span class="frac"><span class="num">c</span><span class="den">d</span></span>
+      =
+      <span class="frac"><span class="num">a × c</span><span class="den">b × d</span></span>
+    </div>
+
+    <p class="example-label">Exemple</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+        <span>×</span>
+        <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">3 × 2</span><span class="den">4 × 5</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">6</span><span class="den">20</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">3</span><span class="den">10</span></span></span>
+      </div>
+      <div class="step" style="font-size:.83rem;color:var(--muted)">
+        (on simplifie : 6 ÷ 2 = 3 et 20 ÷ 2 = 10)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rule-card mul">
+  <div class="rule-card-header">
+    <div class="rule-icon">✖</div>
+    <h3>Règle 5 — Fraction × un <strong>nombre entier</strong></h3>
+  </div>
+  <div class="rule-body">
+    <p>On écrit l'entier avec le dénominateur 1, puis on multiplie normalement.</p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      × n
+      =
+      <span class="frac"><span class="num">a × n</span><span class="den">b</span></span>
+    </div>
+
+    <p class="example-label">Exemple</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+        <span>× 6</span>
+        <span>=</span>
+        <span class="frac"><span class="num">2 × 6</span><span class="den">3</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">12</span><span class="den">3</span></span>
+        <span>=</span>
+        <span class="highlight">4</span>
+      </div>
+    </div>
+
+    <div class="remember">
+      <strong>💡 Astuce : simplification avant de calculer</strong>
+      <span class="frac" style="font-family:DM Mono,monospace"><span class="num">2</span><span class="den">3</span></span> × 6 :
+      on peut d'abord simplifier 6 ÷ 3 = 2, puis 2 × 2 = <strong>4</strong>.
+      C'est plus rapide !
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     3. DIVISION
+═══════════════════════════════════════════════ -->
+
+<div class="section-head" id="div">
+  <h2>Division</h2>
+  <span class="badge">Règles 6 &amp; 7</span>
+</div>
+
+<div class="rule-card div">
+  <div class="rule-card-header">
+    <div class="rule-icon">➗</div>
+    <h3>Règle 6 — Diviser par une fraction = multiplier par son inverse</h3>
+  </div>
+  <div class="rule-body">
+    <p>Diviser par une fraction, c'est <strong>multiplier par la fraction retournée</strong> (son inverse). On échange le numérateur et le dénominateur du diviseur.</p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ÷
+      <span class="frac"><span class="num">c</span><span class="den">d</span></span>
+      =
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ×
+      <span class="frac"><span class="num">d</span><span class="den">c</span></span>
+      =
+      <span class="frac"><span class="num">a × d</span><span class="den">b × c</span></span>
+    </div>
+
+    <p class="example-label">Exemple 1</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+        <span>÷</span>
+        <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+        <span class="arrow">→ on retourne</span>
+        <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+        <span>en</span>
+        <span class="frac"><span class="num">5</span><span class="den">2</span></span>
+      </div>
+      <div class="step">
+        <span>=</span>
+        <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+        <span>×</span>
+        <span class="frac"><span class="num">5</span><span class="den">2</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">15</span><span class="den">8</span></span>
+        <span>=</span>
+        <span class="highlight">1</span>
+        <span class="frac"><span class="num">7</span><span class="den">8</span></span>
+      </div>
+    </div>
+
+    <p class="example-label">Exemple 2</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+        <span>÷</span>
+        <span class="frac"><span class="num">5</span><span class="den">3</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+        <span>×</span>
+        <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">15</span><span class="den">30</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rule-card div">
+  <div class="rule-card-header">
+    <div class="rule-icon">➗</div>
+    <h3>Règle 7 — Fraction ÷ un <strong>nombre entier</strong></h3>
+  </div>
+  <div class="rule-body">
+    <p>Un entier n peut s'écrire <span class="frac" style="font-family:DM Mono,monospace;font-size:.9em"><span class="num">n</span><span class="den">1</span></span>. Son inverse est <span class="frac" style="font-family:DM Mono,monospace;font-size:.9em"><span class="num">1</span><span class="den">n</span></span>.</p>
+
+    <div class="formula">
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ÷ n
+      =
+      <span class="frac"><span class="num">a</span><span class="den">b</span></span>
+      ×
+      <span class="frac"><span class="num">1</span><span class="den">n</span></span>
+      =
+      <span class="frac"><span class="num">a</span><span class="den">b × n</span></span>
+    </div>
+
+    <p class="example-label">Exemple</p>
+    <div class="example">
+      <div class="step">
+        <span class="frac"><span class="num">4</span><span class="den">5</span></span>
+        <span>÷ 2</span>
+        <span>=</span>
+        <span class="frac"><span class="num">4</span><span class="den">5</span></span>
+        <span>×</span>
+        <span class="frac"><span class="num">1</span><span class="den">2</span></span>
+        <span>=</span>
+        <span class="frac"><span class="num">4</span><span class="den">10</span></span>
+        <span>=</span>
+        <span class="highlight"><span class="frac"><span class="num">2</span><span class="den">5</span></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     EXERCICES
+═══════════════════════════════════════════════ -->
+
+<div class="section-head" id="exercices">
+  <h2>Exercices d'application</h2>
+  <span class="badge">12 exercices</span>
+</div>
+
+<p style="color:var(--muted);font-size:.9rem;margin-bottom:1.2rem">Clique sur un exercice pour afficher sa correction détaillée.</p>
+
+<div class="show-all-wrap">
+  <button class="btn-all" onclick="revealAll()">Tout afficher</button>
+  <button class="btn-reset" onclick="resetAll()">Tout masquer</button>
+</div>
+
+<!-- GROUPE A : addition / soustraction -->
+<p style="font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent1);margin-bottom:.7rem">➕ Addition &amp; Soustraction</p>
+
+<div class="exercise-grid">
+
+  <div class="ex-card" id="ex1">
+    <div class="ex-num">Exercice 1</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">2</span><span class="den">9</span></span>
+      +
+      <span class="frac"><span class="num">5</span><span class="den">9</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      Même dénominateur (9) :<br>
+      2 + 5 = 7<br>
+      <strong>= <span class="frac"><span class="num">7</span><span class="den">9</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex1')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex2">
+    <div class="ex-num">Exercice 2</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">7</span><span class="den">8</span></span>
+      −
+      <span class="frac"><span class="num">3</span><span class="den">8</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      Même dénominateur (8) :<br>
+      7 − 3 = 4<br>
+      <span class="frac"><span class="num">4</span><span class="den">8</span></span>
+      → on simplifie par 4 :<br>
+      <strong>= <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex2')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex3">
+    <div class="ex-num">Exercice 3</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+      +
+      <span class="frac"><span class="num">1</span><span class="den">5</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      Dénominateur commun : 3 × 5 = 15<br>
+      <span class="frac"><span class="num">1×5</span><span class="den">15</span></span>
+      +
+      <span class="frac"><span class="num">1×3</span><span class="den">15</span></span>
+      =
+      <span class="frac"><span class="num">5</span><span class="den">15</span></span>
+      +
+      <span class="frac"><span class="num">3</span><span class="den">15</span></span><br>
+      <strong>=
+      <span class="frac"><span class="num">8</span><span class="den">15</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex3')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex4">
+    <div class="ex-num">Exercice 4</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+      −
+      <span class="frac"><span class="num">1</span><span class="den">6</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      PPCM(4, 6) = 12<br>
+      <span class="frac"><span class="num">3×3</span><span class="den">12</span></span>
+      −
+      <span class="frac"><span class="num">1×2</span><span class="den">12</span></span>
+      =
+      <span class="frac"><span class="num">9</span><span class="den">12</span></span>
+      −
+      <span class="frac"><span class="num">2</span><span class="den">12</span></span><br>
+      <strong>=
+      <span class="frac"><span class="num">7</span><span class="den">12</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex4')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex5">
+    <div class="ex-num">Exercice 5</div>
+    <div class="ex-question">
+      5 +
+      <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      5 =
+      <span class="frac"><span class="num">15</span><span class="den">3</span></span><br>
+      <span class="frac"><span class="num">15</span><span class="den">3</span></span>
+      +
+      <span class="frac"><span class="num">2</span><span class="den">3</span></span><br>
+      <strong>=
+      <span class="frac"><span class="num">17</span><span class="den">3</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex5')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex6">
+    <div class="ex-num">Exercice 6</div>
+    <div class="ex-question">
+      4 −
+      <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      4 =
+      <span class="frac"><span class="num">20</span><span class="den">5</span></span><br>
+      <span class="frac"><span class="num">20</span><span class="den">5</span></span>
+      −
+      <span class="frac"><span class="num">3</span><span class="den">5</span></span><br>
+      <strong>=
+      <span class="frac"><span class="num">17</span><span class="den">5</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex6')">Voir la correction</button>
+  </div>
+
+</div>
+
+<!-- GROUPE B : multiplication -->
+<p style="font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.7rem;margin-top:1.5rem">✖ Multiplication</p>
+
+<div class="exercise-grid">
+
+  <div class="ex-card" id="ex7">
+    <div class="ex-num">Exercice 7</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+      ×
+      <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      Numérateurs : 2 × 3 = 6<br>
+      Dénominateurs : 3 × 4 = 12<br>
+      <span class="frac"><span class="num">6</span><span class="den">12</span></span>
+      → on simplifie par 6 :<br>
+      <strong>=
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex7')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex8">
+    <div class="ex-num">Exercice 8</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+      ×
+      <span class="frac"><span class="num">4</span><span class="den">7</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      5 × 4 = 20<br>
+      6 × 7 = 42<br>
+      <span class="frac"><span class="num">20</span><span class="den">42</span></span>
+      → on simplifie par 2 :<br>
+      <strong>=
+      <span class="frac"><span class="num">10</span><span class="den">21</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex8')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex9">
+    <div class="ex-num">Exercice 9</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">3</span><span class="den">8</span></span>
+      × 4 = ?
+    </div>
+    <div class="ex-answer">
+      <span class="frac"><span class="num">3 × 4</span><span class="den">8</span></span>
+      =
+      <span class="frac"><span class="num">12</span><span class="den">8</span></span>
+      → on simplifie par 4 :<br>
+      <strong>=
+      <span class="frac"><span class="num">3</span><span class="den">2</span></span>
+      = 1
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex9')">Voir la correction</button>
+  </div>
+
+</div>
+
+<!-- GROUPE C : division -->
+<p style="font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent3);margin-bottom:.7rem;margin-top:1.5rem">➗ Division</p>
+
+<div class="exercise-grid">
+
+  <div class="ex-card" id="ex10">
+    <div class="ex-num">Exercice 10</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+      ÷
+      <span class="frac"><span class="num">4</span><span class="den">9</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      On retourne
+      <span class="frac"><span class="num">4</span><span class="den">9</span></span>
+      →
+      <span class="frac"><span class="num">9</span><span class="den">4</span></span><br>
+      <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+      ×
+      <span class="frac"><span class="num">9</span><span class="den">4</span></span>
+      =
+      <span class="frac"><span class="num">18</span><span class="den">12</span></span><br>
+      → simplifie par 6 :<br>
+      <strong>=
+      <span class="frac"><span class="num">3</span><span class="den">2</span></span>
+      = 1
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex10')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex11">
+    <div class="ex-num">Exercice 11</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+      ÷
+      <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+      = ?
+    </div>
+    <div class="ex-answer">
+      Inverse de
+      <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+      =
+      <span class="frac"><span class="num">3</span><span class="den">1</span></span>
+      = 3<br>
+      <span class="frac"><span class="num">5</span><span class="den">6</span></span>
+      × 3 =
+      <span class="frac"><span class="num">15</span><span class="den">6</span></span><br>
+      → simplifie par 3 :<br>
+      <strong>=
+      <span class="frac"><span class="num">5</span><span class="den">2</span></span>
+      = 2
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex11')">Voir la correction</button>
+  </div>
+
+  <div class="ex-card" id="ex12">
+    <div class="ex-num">Exercice 12</div>
+    <div class="ex-question">
+      <span class="frac"><span class="num">7</span><span class="den">8</span></span>
+      ÷ 7 = ?
+    </div>
+    <div class="ex-answer">
+      Inverse de 7 =
+      <span class="frac"><span class="num">1</span><span class="den">7</span></span><br>
+      <span class="frac"><span class="num">7</span><span class="den">8</span></span>
+      ×
+      <span class="frac"><span class="num">1</span><span class="den">7</span></span>
+      =
+      <span class="frac"><span class="num">7</span><span class="den">56</span></span><br>
+      → simplifie par 7 :<br>
+      <strong>=
+      <span class="frac"><span class="num">1</span><span class="den">8</span></span></strong>
+    </div>
+    <button class="btn-reveal" onclick="toggle('ex12')">Voir la correction</button>
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  <p>Document pédagogique – Calcul avec les fractions &nbsp;|&nbsp; Tous niveaux collège</p>
+</footer>
+
+<script>
+  function toggle(id) {
+    const card = document.getElementById(id);
+    const btn = card.querySelector('.btn-reveal');
+    card.classList.toggle('revealed');
+    btn.textContent = card.classList.contains('revealed') ? 'Masquer' : 'Voir la correction';
+  }
+
+  function revealAll() {
+    document.querySelectorAll('.ex-card').forEach(card => {
+      card.classList.add('revealed');
+      card.querySelector('.btn-reveal').textContent = 'Masquer';
+    });
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.ex-card').forEach(card => {
+      card.classList.remove('revealed');
+      card.querySelector('.btn-reveal').textContent = 'Voir la correction';
+    });
+  }
+</script>
+
+</body>
+</html>

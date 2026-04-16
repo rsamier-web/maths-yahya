@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractions &amp; Nombres relatifs – Exercices</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #f5f3ef;
+    --white:    #ffffff;
+    --ink:      #1e1b18;
+    --muted:    #8a8278;
+    --border:   #ddd9d2;
+
+    --lvl1:     #2e7d52;
+    --lvl1-bg:  #edf7f1;
+    --lvl2:     #b06b00;
+    --lvl2-bg:  #fdf3e3;
+    --lvl3:     #c0392b;
+    --lvl3-bg:  #fdf0ee;
+    --lvl4:     #5b3fa0;
+    --lvl4-bg:  #f1eefb;
+
+    --corr:     #1e6f3e;
+    --corr-bg:  #eaf5ee;
+    --neg:      #c0392b;
+
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 0 1rem 5rem;
+  }
+
+  header {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2.5rem 0 1.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  header h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.01em; }
+  header p  { margin-top: .5rem; color: var(--muted); font-size: .95rem; }
+
+  .progress-bar-wrap {
+    max-width: 800px;
+    margin: 1.4rem auto .4rem;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: .35rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .progress-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--lvl1);
+    border-radius: 99px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+
+  .controls {
+    max-width: 800px;
+    margin: 1rem auto 1.8rem;
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    padding: .45rem 1.1rem;
+    border-radius: 7px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all .15s;
+  }
+
+  .btn-dark  { background: var(--ink); color: #fff; }
+  .btn-dark:hover { background: #3a3530; }
+  .btn-outline { background: transparent; color: var(--muted); border-color: var(--border); }
+  .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+  .score-badge { margin-left: auto; font-size: .85rem; font-weight: 700; color: var(--lvl1); }
+
+  .legend {
+    max-width: 800px;
+    margin: 0 auto 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.4rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  section { max-width: 800px; margin: 0 auto 2.2rem; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .6rem .9rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+  }
+
+  .section-header h2 { font-size: .95rem; font-weight: 800; letter-spacing: .02em; }
+
+  .level-badge {
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .2rem .65rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ex-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .ex-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .ex-card.revealed { border-color: #9ecdb6; }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .card-head:hover { background: #faf8f5; }
+
+  .ex-number {
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 5rem;
+    flex-shrink: 0;
+  }
+
+  .ex-question {
+    font-family: 'Fira Mono', monospace;
+    font-size: 1.05rem;
+    line-height: 2.4;
+    flex: 1;
+  }
+
+  .ex-tag {
+    font-size: .7rem;
+    font-weight: 700;
+    padding: .15rem .55rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .toggle-icon {
+    font-size: .85rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+
+  .ex-card.revealed .toggle-icon { transform: rotate(180deg); }
+
+  .correction {
+    display: none;
+    background: var(--corr-bg);
+    border-top: 1.5px solid #c2e0cf;
+    padding: .85rem 1rem .85rem 1.8rem;
+  }
+
+  .ex-card.revealed .correction { display: block; }
+
+  .corr-label {
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--corr);
+    margin-bottom: .5rem;
+  }
+
+  .corr-steps {
+    font-family: 'Fira Mono', monospace;
+    font-size: .9rem;
+    line-height: 2.3;
+    color: #2a5540;
+  }
+
+  .step-line { display: block; }
+  .result { font-weight: 700; color: var(--corr); font-size: 1rem; }
+  .note {
+    font-family: 'Nunito', sans-serif;
+    font-size: .82rem;
+    color: #5a7a6a;
+    display: block;
+    margin-top: .1rem;
+  }
+
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    font-family: 'Fira Mono', monospace;
+    line-height: 1.2;
+    margin: 0 .1em;
+  }
+
+  .frac .n {
+    border-bottom: 1.5px solid currentColor;
+    padding: 0 .2em .05em;
+    min-width: 1em;
+    text-align: center;
+    font-size: .92em;
+  }
+
+  .frac .d {
+    padding: .05em .2em 0;
+    min-width: 1em;
+    text-align: center;
+    font-size: .92em;
+  }
+
+  .neg { color: var(--neg); font-weight: 600; }
+
+  footer {
+    max-width: 800px;
+    margin: 2rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 560px) {
+    .ex-tag { display: none; }
+    .ex-number { min-width: 3.5rem; }
+    .card-head { padding: .65rem .75rem; }
+    .correction { padding-left: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Fractions &amp; Nombres relatifs — Exercices</h1>
+  <p>20 exercices de complexité croissante · Cliquer sur un exercice pour afficher la correction</p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-meta">
+    <span>Progression</span>
+    <span id="score-text">0 / 20</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog"></div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-dark" onclick="revealAll()">Tout afficher</button>
+  <button class="btn btn-outline" onclick="resetAll()">Tout masquer</button>
+  <span class="score-badge" id="score-badge">0 corrigé</span>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lvl1)"></div>Niveau 1 – Bases</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lvl2)"></div>Niveau 2 – Fractions négatives</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lvl3)"></div>Niveau 3 – Entiers relatifs</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lvl4)"></div>Niveau 4 – Enchaînements</div>
+</div>
+
+
+<!-- NIVEAU 1 -->
+<section>
+  <div class="section-header" style="background:var(--lvl1-bg)">
+    <span class="level-badge" style="background:var(--lvl1);color:#fff">Niveau 1</span>
+    <h2 style="color:var(--lvl1)">Fractions positives — rappel des quatre opérations</h2>
+  </div>
+  <div class="ex-list">
+
+    <div class="ex-card" id="e1">
+      <div class="card-head" onclick="toggle('e1')">
+        <span class="ex-number">Exercice 1</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">2</span><span class="d">5</span></span> +
+          <span class="frac"><span class="n">4</span><span class="d">5</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl1-bg);color:var(--lvl1)">Addition</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Même dénominateur (5) → on additionne les numérateurs</span>
+          <span class="step-line">2 + 4 = 6</span>
+          <span class="step-line result">= <span class="frac"><span class="n">6</span><span class="d">5</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e2">
+      <div class="card-head" onclick="toggle('e2')">
+        <span class="ex-number">Exercice 2</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">5</span><span class="d">6</span></span> −
+          <span class="frac"><span class="n">1</span><span class="d">4</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl1-bg);color:var(--lvl1)">Soustraction</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">PPCM(6, 4) = 12</span>
+          <span class="step-line"><span class="frac"><span class="n">5×2</span><span class="d">12</span></span> − <span class="frac"><span class="n">1×3</span><span class="d">12</span></span> = <span class="frac"><span class="n">10</span><span class="d">12</span></span> − <span class="frac"><span class="n">3</span><span class="d">12</span></span></span>
+          <span class="step-line result">= <span class="frac"><span class="n">7</span><span class="d">12</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e3">
+      <div class="card-head" onclick="toggle('e3')">
+        <span class="ex-number">Exercice 3</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">3</span><span class="d">4</span></span> ×
+          <span class="frac"><span class="n">8</span><span class="d">9</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl1-bg);color:var(--lvl1)">Multiplication</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">3 × 8 = 24 &nbsp;&nbsp; 4 × 9 = 36</span>
+          <span class="step-line"><span class="frac"><span class="n">24</span><span class="d">36</span></span> → on simplifie par 12</span>
+          <span class="step-line result">= <span class="frac"><span class="n">2</span><span class="d">3</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e4">
+      <div class="card-head" onclick="toggle('e4')">
+        <span class="ex-number">Exercice 4</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">4</span><span class="d">5</span></span> ÷
+          <span class="frac"><span class="n">2</span><span class="d">3</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl1-bg);color:var(--lvl1)">Division</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Inverse de <span class="frac"><span class="n">2</span><span class="d">3</span></span> = <span class="frac"><span class="n">3</span><span class="d">2</span></span></span>
+          <span class="step-line"><span class="frac"><span class="n">4</span><span class="d">5</span></span> × <span class="frac"><span class="n">3</span><span class="d">2</span></span> = <span class="frac"><span class="n">12</span><span class="d">10</span></span> → on simplifie par 2</span>
+          <span class="step-line result">= <span class="frac"><span class="n">6</span><span class="d">5</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e5">
+      <div class="card-head" onclick="toggle('e5')">
+        <span class="ex-number">Exercice 5</span>
+        <span class="ex-question">3 − <span class="frac"><span class="n">7</span><span class="d">4</span></span> = ?</span>
+        <span class="ex-tag" style="background:var(--lvl1-bg);color:var(--lvl1)">Entier – fraction</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">3 = <span class="frac"><span class="n">12</span><span class="d">4</span></span></span>
+          <span class="step-line"><span class="frac"><span class="n">12</span><span class="d">4</span></span> − <span class="frac"><span class="n">7</span><span class="d">4</span></span> = <span class="frac"><span class="n">5</span><span class="d">4</span></span></span>
+          <span class="step-line result">= <span class="frac"><span class="n">5</span><span class="d">4</span></span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- NIVEAU 2 -->
+<section>
+  <div class="section-header" style="background:var(--lvl2-bg)">
+    <span class="level-badge" style="background:var(--lvl2);color:#fff">Niveau 2</span>
+    <h2 style="color:var(--lvl2)">Fractions négatives — règles des signes</h2>
+  </div>
+  <div class="ex-list">
+
+    <div class="ex-card" id="e6">
+      <div class="card-head" onclick="toggle('e6')">
+        <span class="ex-number">Exercice 6</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">7</span></span> +
+          <span class="frac"><span class="n">5</span><span class="d">7</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl2-bg);color:var(--lvl2)">Addition</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Même dénominateur (7)</span>
+          <span class="step-line">(−3) + 5 = +2</span>
+          <span class="step-line result">= <span class="frac"><span class="n">2</span><span class="d">7</span></span></span>
+          <span class="note">Les règles de signes s'appliquent aux numérateurs.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e7">
+      <div class="card-head" onclick="toggle('e7')">
+        <span class="ex-number">Exercice 7</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">1</span><span class="d">3</span></span> − <span class="neg">(−</span><span class="frac"><span class="n">2</span><span class="d">3</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl2-bg);color:var(--lvl2)">Soustraction</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Soustraire un négatif revient à additionner</span>
+          <span class="step-line"><span class="frac"><span class="n">1</span><span class="d">3</span></span> + <span class="frac"><span class="n">2</span><span class="d">3</span></span> = <span class="frac"><span class="n">3</span><span class="d">3</span></span></span>
+          <span class="step-line result">= 1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e8">
+      <div class="card-head" onclick="toggle('e8')">
+        <span class="ex-number">Exercice 8</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">5</span></span> ×
+          <span class="frac"><span class="n">3</span><span class="d">4</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl2-bg);color:var(--lvl2)">Multiplication</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">(−) × (+) = (−)</span>
+          <span class="step-line">2 × 3 = 6 &nbsp;&nbsp; 5 × 4 = 20</span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">6</span><span class="d">20</span></span> = <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">10</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e9">
+      <div class="card-head" onclick="toggle('e9')">
+        <span class="ex-number">Exercice 9</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">4</span><span class="d">3</span></span> ×
+          <span class="neg">(−</span><span class="frac"><span class="n">3</span><span class="d">8</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl2-bg);color:var(--lvl2)">Multiplication</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">(−) × (−) = (+)</span>
+          <span class="step-line">4 × 3 = 12 &nbsp;&nbsp; 3 × 8 = 24</span>
+          <span class="step-line"><span class="frac"><span class="n">12</span><span class="d">24</span></span> → on simplifie par 12</span>
+          <span class="step-line result">= <span class="frac"><span class="n">1</span><span class="d">2</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e10">
+      <div class="card-head" onclick="toggle('e10')">
+        <span class="ex-number">Exercice 10</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">4</span></span> ÷
+          <span class="frac"><span class="n">9</span><span class="d">2</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl2-bg);color:var(--lvl2)">Division</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Inverse de <span class="frac"><span class="n">9</span><span class="d">2</span></span> = <span class="frac"><span class="n">2</span><span class="d">9</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">4</span></span> × <span class="frac"><span class="n">2</span><span class="d">9</span></span> = <span class="neg">−</span><span class="frac"><span class="n">6</span><span class="d">36</span></span> → ÷ 6</span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">6</span></span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- NIVEAU 3 -->
+<section>
+  <div class="section-header" style="background:var(--lvl3-bg)">
+    <span class="level-badge" style="background:var(--lvl3);color:#fff">Niveau 3</span>
+    <h2 style="color:var(--lvl3)">Fractions relatives et entiers relatifs</h2>
+  </div>
+  <div class="ex-list">
+
+    <div class="ex-card" id="e11">
+      <div class="card-head" onclick="toggle('e11')">
+        <span class="ex-number">Exercice 11</span>
+        <span class="ex-question"><span class="neg">−5</span> + <span class="frac"><span class="n">3</span><span class="d">4</span></span> = ?</span>
+        <span class="ex-tag" style="background:var(--lvl3-bg);color:var(--lvl3)">Addition</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">−5 = <span class="neg">−</span><span class="frac"><span class="n">20</span><span class="d">4</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">20</span><span class="d">4</span></span> + <span class="frac"><span class="n">3</span><span class="d">4</span></span> = <span class="neg">−</span><span class="frac"><span class="n">17</span><span class="d">4</span></span></span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">17</span><span class="d">4</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e12">
+      <div class="card-head" onclick="toggle('e12')">
+        <span class="ex-number">Exercice 12</span>
+        <span class="ex-question"><span class="neg">−3</span> × <span class="neg">(−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span><span class="neg">)</span> = ?</span>
+        <span class="ex-tag" style="background:var(--lvl3-bg);color:var(--lvl3)">Multiplication</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">(−) × (−) = (+)</span>
+          <span class="step-line"><span class="frac"><span class="n">3 × 5</span><span class="d">6</span></span> = <span class="frac"><span class="n">15</span><span class="d">6</span></span> → ÷ 3</span>
+          <span class="step-line result">= <span class="frac"><span class="n">5</span><span class="d">2</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e13">
+      <div class="card-head" onclick="toggle('e13')">
+        <span class="ex-number">Exercice 13</span>
+        <span class="ex-question"><span class="neg">(−</span><span class="frac"><span class="n">7</span><span class="d">2</span></span><span class="neg">)</span> ÷ <span class="neg">(−7)</span> = ?</span>
+        <span class="ex-tag" style="background:var(--lvl3-bg);color:var(--lvl3)">Division</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Inverse de (−7) = <span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">7</span></span></span>
+          <span class="step-line">(−) × (−) = (+)</span>
+          <span class="step-line"><span class="frac"><span class="n">7</span><span class="d">2</span></span> × <span class="frac"><span class="n">1</span><span class="d">7</span></span> = <span class="frac"><span class="n">7</span><span class="d">14</span></span> → ÷ 7</span>
+          <span class="step-line result">= <span class="frac"><span class="n">1</span><span class="d">2</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e14">
+      <div class="card-head" onclick="toggle('e14')">
+        <span class="ex-number">Exercice 14</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">3</span></span> + <span class="neg">(−</span><span class="frac"><span class="n">1</span><span class="d">4</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl3-bg);color:var(--lvl3)">Somme de négatifs</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Dénominateur commun : 12</span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">8</span><span class="d">12</span></span> + <span class="neg">(−</span><span class="frac"><span class="n">3</span><span class="d">12</span></span><span class="neg">)</span></span>
+          <span class="step-line">(−8) + (−3) = −11</span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">11</span><span class="d">12</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e15">
+      <div class="card-head" onclick="toggle('e15')">
+        <span class="ex-number">Exercice 15</span>
+        <span class="ex-question">
+          <span class="neg">−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span> − <span class="neg">(−</span><span class="frac"><span class="n">1</span><span class="d">3</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl3-bg);color:var(--lvl3)">Soustraction</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">−(−) devient +</span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span> + <span class="frac"><span class="n">1</span><span class="d">3</span></span> = <span class="neg">−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span> + <span class="frac"><span class="n">2</span><span class="d">6</span></span></span>
+          <span class="step-line">(−5) + 2 = −3</span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">6</span></span> = <span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">2</span></span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- NIVEAU 4 -->
+<section>
+  <div class="section-header" style="background:var(--lvl4-bg)">
+    <span class="level-badge" style="background:var(--lvl4);color:#fff">Niveau 4</span>
+    <h2 style="color:var(--lvl4)">Enchaînements d'opérations</h2>
+  </div>
+  <div class="ex-list">
+
+    <div class="ex-card" id="e16">
+      <div class="card-head" onclick="toggle('e16')">
+        <span class="ex-number">Exercice 16</span>
+        <span class="ex-question">
+          <span class="frac"><span class="n">1</span><span class="d">2</span></span> + <span class="frac"><span class="n">1</span><span class="d">3</span></span> × <span class="neg">(−6)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl4-bg);color:var(--lvl4)">Priorités</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Priorité à la multiplication :</span>
+          <span class="step-line"><span class="frac"><span class="n">1</span><span class="d">3</span></span> × (−6) = <span class="neg">−</span><span class="frac"><span class="n">6</span><span class="d">3</span></span> = <span class="neg">−2</span></span>
+          <span class="step-line"><span class="frac"><span class="n">1</span><span class="d">2</span></span> + (−2) = <span class="frac"><span class="n">1</span><span class="d">2</span></span> − <span class="frac"><span class="n">4</span><span class="d">2</span></span></span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">2</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e17">
+      <div class="card-head" onclick="toggle('e17')">
+        <span class="ex-number">Exercice 17</span>
+        <span class="ex-question">
+          <span class="neg">(−</span><span class="frac"><span class="n">3</span><span class="d">4</span></span> + <span class="frac"><span class="n">1</span><span class="d">2</span></span><span class="neg">)</span> × <span class="neg">(−4)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl4-bg);color:var(--lvl4)">Parenthèses</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Parenthèses en premier :</span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">4</span></span> + <span class="frac"><span class="n">2</span><span class="d">4</span></span> = <span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">4</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">4</span></span> × (−4) → (−) × (−) = (+)</span>
+          <span class="step-line"><span class="frac"><span class="n">4</span><span class="d">4</span></span></span>
+          <span class="step-line result">= 1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e18">
+      <div class="card-head" onclick="toggle('e18')">
+        <span class="ex-number">Exercice 18</span>
+        <span class="ex-question">
+          <span class="neg">(−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span><span class="neg">)</span> ÷ <span class="frac"><span class="n">5</span><span class="d">3</span></span> + <span class="frac"><span class="n">3</span><span class="d">4</span></span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl4-bg);color:var(--lvl4)">Priorités</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Division d'abord :</span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">5</span><span class="d">6</span></span> × <span class="frac"><span class="n">3</span><span class="d">5</span></span> = <span class="neg">−</span><span class="frac"><span class="n">15</span><span class="d">30</span></span> = <span class="neg">−</span><span class="frac"><span class="n">1</span><span class="d">2</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">4</span></span> + <span class="frac"><span class="n">3</span><span class="d">4</span></span></span>
+          <span class="step-line result">= <span class="frac"><span class="n">1</span><span class="d">4</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e19">
+      <div class="card-head" onclick="toggle('e19')">
+        <span class="ex-number">Exercice 19</span>
+        <span class="ex-question">
+          <span class="neg">−2</span> × <span class="frac"><span class="n">3</span><span class="d">5</span></span> − <span class="neg">(−</span><span class="frac"><span class="n">4</span><span class="d">5</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl4-bg);color:var(--lvl4)">Expression</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">Multiplication d'abord :</span>
+          <span class="step-line">(−2) × <span class="frac"><span class="n">3</span><span class="d">5</span></span> = <span class="neg">−</span><span class="frac"><span class="n">6</span><span class="d">5</span></span></span>
+          <span class="step-line">−(−<span class="frac"><span class="n">4</span><span class="d">5</span></span>) = +<span class="frac"><span class="n">4</span><span class="d">5</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">6</span><span class="d">5</span></span> + <span class="frac"><span class="n">4</span><span class="d">5</span></span></span>
+          <span class="step-line result">= <span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">5</span></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" id="e20">
+      <div class="card-head" onclick="toggle('e20')">
+        <span class="ex-number">Exercice 20 ⚡</span>
+        <span class="ex-question">
+          <span class="neg">(−</span><span class="frac"><span class="n">2</span><span class="d">3</span></span><span class="neg">)</span> ÷ <span class="frac"><span class="n">4</span><span class="d">9</span></span> × <span class="neg">(−</span><span class="frac"><span class="n">3</span><span class="d">2</span></span><span class="neg">)</span> = ?
+        </span>
+        <span class="ex-tag" style="background:var(--lvl4-bg);color:var(--lvl4)">Défi</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="correction">
+        <div class="corr-label">✓ Correction</div>
+        <div class="corr-steps">
+          <span class="step-line">De gauche à droite :</span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">3</span></span> ÷ <span class="frac"><span class="n">4</span><span class="d">9</span></span> = <span class="neg">−</span><span class="frac"><span class="n">2</span><span class="d">3</span></span> × <span class="frac"><span class="n">9</span><span class="d">4</span></span> = <span class="neg">−</span><span class="frac"><span class="n">18</span><span class="d">12</span></span> = <span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">2</span></span></span>
+          <span class="step-line"><span class="neg">−</span><span class="frac"><span class="n">3</span><span class="d">2</span></span> × <span class="neg">(−</span><span class="frac"><span class="n">3</span><span class="d">2</span></span><span class="neg">)</span> → (−) × (−) = (+)</span>
+          <span class="step-line"><span class="frac"><span class="n">3 × 3</span><span class="d">2 × 2</span></span> = <span class="frac"><span class="n">9</span><span class="d">4</span></span></span>
+          <span class="step-line result">= <span class="frac"><span class="n">9</span><span class="d">4</span></span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Feuille d'exercices — Fractions &amp; Nombres relatifs · Niveaux 1 → 4 · 20 exercices
+</footer>
+
+<script>
+  const TOTAL = 20;
+  const revealed = new Set();
+
+  function toggle(id) {
+    const card = document.getElementById(id);
+    if (card.classList.contains('revealed')) {
+      card.classList.remove('revealed');
+      revealed.delete(id);
+    } else {
+      card.classList.add('revealed');
+      revealed.add(id);
+    }
+    update();
+  }
+
+  function revealAll() {
+    for (let i = 1; i <= TOTAL; i++) {
+      const id = 'e' + i;
+      document.getElementById(id).classList.add('revealed');
+      revealed.add(id);
+    }
+    update();
+  }
+
+  function resetAll() {
+    for (let i = 1; i <= TOTAL; i++) {
+      document.getElementById('e' + i).classList.remove('revealed');
+    }
+    revealed.clear();
+    update();
+  }
+
+  function update() {
+    const n = revealed.size;
+    document.getElementById('prog').style.width = (n / TOTAL * 100) + '%';
+    document.getElementById('score-text').textContent = n + ' / ' + TOTAL;
+    document.getElementById('score-badge').textContent = n + ' corrigé' + (n > 1 ? 's' : '');
+  }
+</script>
+</body>
+</html>
